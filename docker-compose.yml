@@ -1,15 +1,15 @@
 version: '3'
 
-networks:
-    laravel:
-        driver: bridge
+# networks:
+#     laravel:
+#         driver: bridge
 
 services:
     nginx:
         image: nginx:alpine
-        container_name: "nginx"
-        restart: unless-stopped
-        tty: true
+        # container_name: "nginx"
+        # restart: unless-stopped
+        # tty: true
         ports:
             - "8000:8000"
         volumes:
@@ -29,9 +29,9 @@ services:
 
     postgres:
         image: postgres:14.4-alpine
-        container_name: "postgres"
-        restart: unless-stopped
-        tty: true
+        # container_name: "postgres"
+        # restart: unless-stopped
+        # tty: true
         ports:
             - "5432:5432"
         volumes:
@@ -55,9 +55,9 @@ services:
         #     dockerfile: Dockerfile
         # image: laravel_docker:latest
         image: zroni4/siakad:1.0
-        container_name: "php"
-        restart: unless-stopped
-        tty: true
+        # container_name: "php"
+        # restart: unless-stopped
+        # tty: true
         working_dir: /var/www/app
         volumes:
             - ./:/var/www/app
