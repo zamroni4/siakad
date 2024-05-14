@@ -1,0 +1,45 @@
+# Use an official PHP image as the base image
+FROM php:8.1-fpm
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev
+
+# Increase memory limit for Composer
+RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/docker-php-memory.ini
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath xml zip
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer self-update
+
+# Copy the composer.json and composer.lock files to leverage Docker cache
+COPY composer.json composer.lock ./
+
+# Clear Composer cache
+RUN composer clear-cache
+
+# Install project dependencies
+RUN composer install --no-scripts --no-autoloader
+
+# Copy the rest of the application code
+COPY . .
+
+# Generate the autoload files
+RUN composer dump-autoload --optimize
+
+# Set permissions for Laravel
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Expose port 9000 and start PHP-FPM
+EXPOSE 9000
+CMD ["php-fpm"]
