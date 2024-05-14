@@ -72,8 +72,20 @@ services:
             placement:
                 constraints: [node.role != manager]
 
-volumes:
-  postgres_data:
+
+    redis_service:
+        image: redis:7.0.9
+        ports:
+        - "6378"
+        deploy:
+        replicas: 3
+        restart_policy:
+            condition: on-failure
+        placement:
+            constraints: [node.role != manager]
+
+# volumes:
+#   postgres_data:
 # nginx_data:
 # letsencrypt_data:
 
