@@ -18,8 +18,8 @@ services:
         depends_on:
             - php
             # - postgres
-        networks:
-            - laravel
+        # networks:
+        #     - laravel
         deploy:
             replicas: 3
             restart_policy:
@@ -40,8 +40,8 @@ services:
             - POSTGRES_DB=siakad_pt
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
-        networks:
-            - laravel
+        # networks:
+        #     - laravel
         deploy:
             replicas: 3
             restart_policy:
@@ -63,8 +63,8 @@ services:
             - ./:/var/www/app
         ports:
             - "9000:9000"
-        networks:
-            - laravel
+        # networks:
+        #     - laravel
         deploy:
             replicas: 3
             restart_policy:
