@@ -21,6 +21,7 @@ services:
         # networks:
         #     - laravel
         deploy:
+            mode: global
             replicas: 3
             restart_policy:
                 condition: on-failure
@@ -66,6 +67,7 @@ services:
         # networks:
         #     - laravel
         deploy:
+            mode: global
             replicas: 3
             restart_policy:
                 condition: on-failure
