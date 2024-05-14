@@ -1,10 +1,10 @@
 version: '3'
 
-networks: 
+networks:
     laravel:
         driver: bridge
 
-services: 
+services:
     nginx:
         image: nginx:alpine
         container_name: "nginx"
@@ -12,14 +12,20 @@ services:
         tty: true
         ports:
             - "8000:8000"
-        volumes: 
+        volumes:
             - ./:/var/www/app
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-        depends_on: 
+        depends_on:
             - php
             # - postgres
-        networks: 
+        networks:
             - laravel
+        deploy:
+            replicas: 3
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role != manager]
 
     postgres:
         image: postgres:14.4-alpine
@@ -36,23 +42,35 @@ services:
             - POSTGRES_PASSWORD=root
         networks:
             - laravel
+        deploy:
+            replicas: 3
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role != manager]
 
     php:
         # build:  migrate : php artisan migrate, seed : artisan db:seed
         #     context: .
         #     dockerfile: Dockerfile
         # image: laravel_docker:latest
-        image: siakad:1.0.0
+        image: zroni4/siakad:1.0
         container_name: "php"
         restart: unless-stopped
         tty: true
         working_dir: /var/www/app
-        volumes: 
+        volumes:
             - ./:/var/www/app
-        ports: 
+        ports:
             - "9000:9000"
-        networks: 
+        networks:
             - laravel
+        deploy:
+            replicas: 3
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role != manager]
 
 volumes:
   postgres_data:
