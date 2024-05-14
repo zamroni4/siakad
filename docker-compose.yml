@@ -22,7 +22,7 @@ services:
         #     - laravel
         deploy:
             mode: global
-            replicas: 3
+            # replicas: 3
             restart_policy:
                 condition: on-failure
             placement:
@@ -68,7 +68,7 @@ services:
         #     - laravel
         deploy:
             mode: global
-            replicas: 3
+            # replicas: 3
             restart_policy:
                 condition: on-failure
             placement:
