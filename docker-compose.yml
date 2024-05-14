@@ -84,8 +84,8 @@ services:
             placement:
                 constraints: [node.role != manager]
 
-# volumes:
-#   postgres_data:
+volumes:
+  postgres_data:
 # nginx_data:
 # letsencrypt_data:
 
