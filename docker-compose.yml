@@ -76,13 +76,13 @@ services:
     redis_service:
         image: redis:7.0.9
         ports:
-        - "6378"
+            - "6378"
         deploy:
-        replicas: 3
-        restart_policy:
-            condition: on-failure
-        placement:
-            constraints: [node.role != manager]
+            replicas: 3
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role != manager]
 
 # volumes:
 #   postgres_data:
