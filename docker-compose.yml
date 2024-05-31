@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 # networks:
 #     laravel:
@@ -132,7 +132,7 @@ volumes:
         driver: local
         driver_opts:
             type: nfs
-            o: addr=<NFS_SERVER_IP>,rw
+            o: addr=192.168.34.7,rw
             device: ":/srv/nfs_share"
     pg_data:
         driver: local
