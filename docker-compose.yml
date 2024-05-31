@@ -94,8 +94,8 @@ services:
             # - type: bind
             #   source: /mnt/nfs/share/app
             #   target: /var/www/html
-        networks:
-            - backend
+        # networks:
+        #     - backend
         deploy:
             mode: replicated
             replicas: 4
