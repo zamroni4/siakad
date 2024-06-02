@@ -10,9 +10,9 @@ services:
         deploy:
             mode: replicated
             replicas: 4
-            update_config:
-                parallelism: 1
-                delay: 10s
+            # update_config:
+            #     parallelism: 1
+            #     delay: 10s
             restart_policy:
                 condition: on-failure
             placement:
@@ -45,9 +45,9 @@ services:
         deploy:
             mode: replicated
             replicas: 4
-            update_config:
-                parallelism: 1
-                delay: 10s
+            # update_config:
+            #     parallelism: 1
+            #     delay: 10s
             restart_policy:
                 condition: on-failure
             placement:
