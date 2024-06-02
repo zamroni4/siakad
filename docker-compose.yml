@@ -58,6 +58,6 @@ volumes:
         driver_opts:
             type: nfs
             o: addr=192.168.34.7,rw
-            device: ":/srv/nfs_share"
+            device: ":/srv/nfs_share/siakad"
     pg_data:
         driver: local
