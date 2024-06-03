@@ -6,10 +6,10 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - nfs_share:/usr/share/nginx/html
+            - nfs_share:/srv/nfs_share/siakad
         deploy:
             mode: replicated
-            replicas: 1
+            replicas: 3
             # update_config:
             #     parallelism: 1
             #     delay: 10s
@@ -41,10 +41,10 @@ services:
         ports:
             - "9000:9000"
         volumes:
-            - nfs_share:/var/www/html
+            - nfs_share:/srv/nfs_share/siakad
         deploy:
             mode: replicated
-            replicas: 1
+            replicas: 3
             # update_config:
             #     parallelism: 1
             #     delay: 10s
