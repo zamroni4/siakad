@@ -1,63 +1,52 @@
-version: '3.9'
+
+version: "3.9"
 
 services:
-    nginx:
-        image: nginx:alpine
-        ports:
-            - "8000:8000"
-        volumes:
-            - nfs_share:/srv/nfs_share/siakad/nginx/default.conf
-        deploy:
-            mode: replicated
-            replicas: 3
-            # update_config:
-            #     parallelism: 1
-            #     delay: 10s
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.role != manager
+#   database:
+#     image: 192.168.10.2:5000/mariadb:10.5
+#     restart: always
+#     ports:
+#       - 3306:3306
+#     deploy:
+#       replicas: 1
+#     volumes:
+#       - /mnt/nfsshare/docker/mariadb:/var/lib/mysql
+#     environment:
+#       - MYSQL_ROOT_PASSWORD:rootpassword
+#       - MYSQL_DATABASE:mydb
+#       - MYSQL_USER:user
+#       - MYSQL_PASSWORD:userpassword
 
-    postgres:
-        image: postgres:14.4-alpine
-        ports:
-            - "5432:5432"
-        volumes:
-            - pg_data:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_DB=siakad_pt
-            - POSTGRES_USER=root
-            - POSTGRES_PASSWORD=root
-        deploy:
-            replicas: 1
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints: [node.role != manager]
+#   phpmyadmin:
+#     image: 192.168.10.2:5000/phpmyadmin/phpmyadmin:latest
+#     restart: always
+#     ports:
+#       - 8080:80
+#     deploy:
+#       replicas: 1
+#     environment:
+#       - PMA_ARBITRARY=1
+#       - PMA_HOST=database
+#     depends_on:
+#       - database
 
-    php:
-        image: zroni4/siakad:1.0
-        ports:
-            - "9000:9000"
-        volumes:
-            - nfs_share:/srv/nfs_share/siakad
-        deploy:
-            mode: replicated
-            replicas: 3
-            # update_config:
-            #     parallelism: 1
-            #     delay: 10s
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints: [node.role != manager]
-volumes:
-    nfs_share:
-        driver: local
-        driver_opts:
-            type: nfs
-            o: addr=192.168.34.7,rw
-            device: ":/srv/nfs_share/siakad"
-    pg_data:
-        driver: local
+  php:
+    image: bitnami/php-fpm:7.4
+    restart: always
+    volumes:
+      - /srv/nfs_share/siakad/tes:/usr/share/nginx/html
+    deploy:
+      replicas: 2
+
+  webserver:
+    image: nginx:1.19
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - /srv/nfs_share/siakad/tes:/usr/share/nginx/html
+    deploy:
+      replicas: 2
+    depends_on:
+      - php# version: '3.9'
+
