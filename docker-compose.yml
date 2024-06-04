@@ -6,7 +6,7 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - nfs_share:/srv/nfs_share/siakad
+            - nfs_share:/srv/nfs_share/siakad/nginx/default.conf
         deploy:
             mode: replicated
             replicas: 3
