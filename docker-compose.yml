@@ -1,23 +1,20 @@
 version: "3.9"
 
 services:
-    nginx:
-        image: nginx:alpine
-        ports:
-            - "8000:8000"
-        volumes:
-            - nfs_share:/srv/nfs_share/siakad
-        deploy:
-            mode: replicated
-            replicas: 3
-            # update_config:
-            #     parallelism: 1
-            #     delay: 10s
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints:
-                    - node.role != manager
+    # nginx:
+    #     image: nginx:alpine
+    #     ports:
+    #         - "8000:8000"
+    #     volumes:
+    #         - nfs_share:/srv/nfs_share/siakad
+    #     deploy:
+    #         mode: replicated
+    #         replicas: 3
+    #         restart_policy:
+    #             condition: on-failure
+    #         placement:
+    #             constraints:
+    #                 - node.role != manager
 
     postgres:
         image: postgres:14.4-alpine
@@ -36,22 +33,19 @@ services:
             placement:
                 constraints: [node.role != manager]
 
-    php:
-        image: zroni4/siakad:1.0
-        ports:
-            - "9000:9000"
-        volumes:
-            - nfs_share:/srv/nfs_share/siakad
-        deploy:
-            mode: replicated
-            replicas: 3
-            # update_config:
-            #     parallelism: 1
-            #     delay: 10s
-            restart_policy:
-                condition: on-failure
-            placement:
-                constraints: [node.role != manager]
+    # php:
+    #     image: zroni4/siakad:1.0
+    #     ports:
+    #         - "9000:9000"
+    #     volumes:
+    #         - nfs_share:/srv/nfs_share/siakad
+    #     deploy:
+    #         mode: replicated
+    #         replicas: 3
+    #         restart_policy:
+    #             condition: on-failure
+    #         placement:
+    #             constraints: [node.role != manager]
 volumes:
     nfs_share:
         driver: local
