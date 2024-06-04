@@ -6,7 +6,7 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - /srv/nfs_share/siakad
+            - nfs_share:/srv/nfs_share/siakad
         deploy:
             mode: replicated
             replicas: 3
@@ -41,7 +41,7 @@ services:
         ports:
             - "9000:9000"
         volumes:
-            - /srv/nfs_share/siakad
+            - nfs_share:/srv/nfs_share/siakad
         deploy:
             mode: replicated
             replicas: 3
@@ -52,15 +52,15 @@ services:
                 condition: on-failure
             placement:
                 constraints: [node.role != manager]
-# volumes:
-#     nfs_share:
-#         driver: local
-#         driver_opts:
-#             type: nfs
-#             o: addr=192.168.34.7,rw
-#             device: ":/srv/nfs_share/siakad"
-#     pg_data:
-#         driver: local
+volumes:
+    nfs_share:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=192.168.34.7,rw
+            device: ":/srv/nfs_share/siakad"
+    pg_data:
+        driver: local
 
 # services:
 # #   database:
