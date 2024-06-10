@@ -50,9 +50,6 @@ services:
             replicas: 4
         networks:
             - laravel_network
-            # update_config:
-            #     parallelism: 1
-            #     delay: 10s
             restart_policy:
                 condition: on-failure
             placement:
