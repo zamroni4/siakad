@@ -31,7 +31,7 @@ services:
         environment:
             - POSTGRES_DB=siakad_pt
             - POSTGRES_USER=root
-            - POSTGRES_PASSWORD=root
+            - POSTGRES_PASSWORD=rootpassword
         deploy:
             replicas: 1
             restart_policy:
