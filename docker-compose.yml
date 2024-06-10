@@ -7,14 +7,17 @@ services:
             - "8000:8000"
         volumes:
             - nfs_share:/srv/nfs_share/siakad/nginx/default.conf
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         deploy:
             mode: replicated
-            replicas: 3
+            replicas: 4
             restart_policy:
                 condition: on-failure
             placement:
                 constraints:
                     - node.role != manager
+        networks:
+            - laravel_network
 
     postgres:
         image: postgres:14.4-alpine
@@ -32,6 +35,8 @@ services:
                 condition: on-failure
             placement:
                 constraints: [node.role != manager]
+        networks:
+            - laravel_network
 
     php:
         image: zroni4/siakad:1.0
@@ -39,9 +44,12 @@ services:
             - "9000:9000"
         volumes:
             - nfs_share:/srv/nfs_share/siakad/var/www/app
+            - nfs_share:/var/www/html
         deploy:
             mode: replicated
-            replicas: 3
+            replicas: 4
+        networks:
+            - laravel_network
             # update_config:
             #     parallelism: 1
             #     delay: 10s
@@ -49,6 +57,13 @@ services:
                 condition: on-failure
             placement:
                 constraints: [node.role != manager]
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+            - APP_KEY=base64:wDHC4N3kFTlQs1Q/V9gBv3e2llu44za4Qx2YW4tdsIo=
+        depends_on:
+            - postgres
+
 volumes:
     nfs_share:
         driver: local
@@ -58,6 +73,8 @@ volumes:
             device: ":/srv/nfs_share/siakad"
     pg_data:
         driver: local
+networks:
+    laravel_network:
 
 # services:
 # #   database:
