@@ -45,11 +45,11 @@ services:
         volumes:
             - nfs_share:/srv/nfs_share/siakad/var/www/app
             - nfs_share:/var/www/html
+        networks:
+            - laravel_network
         deploy:
             mode: replicated
             replicas: 4
-        networks:
-            - laravel_network
             restart_policy:
                 condition: on-failure
             placement:
