@@ -6,7 +6,7 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - nfs_volume:/var/www/html
+            - nfs_share:/var/www/html
             # - nfs_share:/srv/nfs_share/siakad/nginx/default.conf
             - /srv/nfs_share/siakad/nginx/default.conf:/etc/nginx/conf.d/default.conf
         deploy:
